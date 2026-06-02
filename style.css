@@ -1,0 +1,270 @@
+body{
+    margin:0;
+    background:black;
+    overflow:hidden;
+    font-family:tahoma;
+}
+/* ================= HEART ================= */
+.word{
+    position:absolute;
+    color:#ffb6d5;
+    font-size:20px;
+    text-shadow:0 0 10px rgba(255,255,255,0.5);
+}
+/* ================= SCENE ================= */
+#scene{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+}
+.hide{
+    display:none;
+}
+/* ================= ENVELOPE ================= */
+#envelope{
+    width:340px;
+    height:230px;
+    position:relative;
+    cursor:pointer;
+    transition:0.8s ease;
+}
+/* بدنه پاکت */
+.body{
+    width:340px;
+    height:230px;
+    background:linear-gradient(145deg,#fbe1ff,#e2a2ff);
+    border-radius:18px;
+    position:absolute;
+    bottom:0;
+    box-shadow:
+    0 12px 30px rgba(0,0,0,0.4),
+    inset 0 -10px 20px rgba(0,0,0,0.08);
+}
+/* ================= FLAP (در) ================= */
+.flap{
+    width:0;
+    height:0;
+    border-left:170px solid transparent;
+    border-right:170px solid transparent;
+    border-top:130px solid #e8a9ff;
+    position:absolute;
+    top:0;
+    transform-origin:top;
+    transition:0.8s ease;
+    z-index:8;
+    /* عمق واقعی */
+    filter:
+        drop-shadow(0 10px 12px rgba(0,0,0,0.25))
+        drop-shadow(0 2px 3px rgba(255,255,255,0.15));
+}
+/* خط جداکننده در */
+.flap::after{
+    content:"";
+    position:absolute;
+    left:-170px;
+    top:0;
+    width:340px;
+    height:6px;
+    background:rgba(255,255,255,0.25);
+    border-radius:3px;
+}
+/* نور روی در */
+.flap::before{
+    content:"";
+    position:absolute;
+    left:-90px;
+    top:20px;
+    width:180px;
+    height:70px;
+    background:radial-gradient(circle, rgba(255,255,255,0.4), transparent);
+    transform:skewY(-10deg);
+}
+/* ================= SEAL ================= */
+.seal{
+    position:absolute;
+    left:50%;
+    top:58%;
+    transform:translate(-50%,-50%);
+    font-size:36px;
+    z-index:12;
+    filter:drop-shadow(0 6px 6px rgba(0,0,0,0.3));
+}
+/* ================= LETTER ================= */
+#letter{
+    width:290px;
+    height:400px;
+    position:absolute;
+    left:25px;
+    top:35px;
+    background:rgba(255,255,255,0.18);
+    backdrop-filter:blur(12px);
+    border-radius:22px;
+    text-align:center;
+    padding:18px;
+    box-sizing:border-box;
+    opacity:0;
+    transform:translateY(35px);
+    z-index:1;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+/* ماه */
+.moon-wrapper{
+    width:140px;
+    height:140px;
+    margin:auto;
+    position:relative;
+    /* چرخش کل ماه */
+    animation:spin 18s linear infinite;
+}
+/* خود ماه */
+.moon{
+    width:140px;
+    height:140px;
+    background:url("moon.jpg");
+    background-size:cover;
+    background-position:center;
+    border-radius:50%;
+    position:relative;
+    /* 💜 glow قوی */
+    box-shadow:
+        0 0 12px rgba(196,115,255,0.9),
+        0 0 25px rgba(168,85,247,0.85),
+        0 0 45px rgba(147,51,234,0.75),
+        0 0 70px rgba(126,34,206,0.6);
+}
+/* هاله نوری */
+.moon::before{
+    content:"";
+    position:absolute;
+    top:-18px;
+    left:-18px;
+    right:-18px;
+    bottom:-18px;
+    border-radius:50%;
+    background:radial-gradient(
+        circle,
+        rgba(168,85,247,0.35),
+        transparent 70%
+    );
+    animation:pulseMoon 3s ease-in-out infinite;
+    z-index:-1;
+}
+/* چرخش */
+@keyframes spin{
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}
+/* نفس کشیدن نور */
+@keyframes pulseMoon{
+    0%{
+        transform:scale(0.95);
+        opacity:0.5;
+    }
+    50%{
+        transform:scale(1.1);
+        opacity:1;
+    }
+    100%{
+        transform:scale(0.95);
+        opacity:0.5;
+    }
+}
+/* متن */
+.message{
+    margin-top:18px;
+    font-size:20px;
+    color:#f0d7ff;
+    line-height:1.6;
+}
+/* ================= OPEN ================= */
+.open .flap{
+    transform:rotateX(180deg);
+}
+.open #envelope{
+    transform:translateY(90px);
+}
+.open #letter{
+    opacity:1;
+    transform:translateY(-260px);
+}
+@keyframes glowPulse{
+    0%{
+        text-shadow:
+        0 0 6px rgba(196,115,255,0.6),
+        0 0 15px rgba(168,85,247,0.5),
+        0 0 25px rgba(147,51,234,0.4);
+    }
+    50%{
+        text-shadow:
+        0 0 10px rgba(196,115,255,1),
+        0 0 25px rgba(168,85,247,0.9),
+        0 0 45px rgba(147,51,234,0.8);
+    }
+    100%{
+        text-shadow:
+        0 0 6px rgba(196,115,255,0.6),
+        0 0 15px rgba(168,85,247,0.5),
+        0 0 25px rgba(147,51,234,0.4);
+    }
+}
+.message{
+    animation:glowPulse 2.5s infinite ease-in-out;
+}
+@media (max-width: 768px){
+
+    /* کل صحنه درست وسط بمونه */
+    #scene{
+        transform: translate(-50%, -50%) scale(0.85);
+    }
+    /* قلب‌ها کوچیک‌تر که صفحه شلوغ نشه */
+    .word{
+        font-size:14px;
+    }
+    /* پاکت کمی کوچیک‌تر ولی همون استایل */
+    #envelope{
+        width:280px;
+        height:200px;
+    }
+    .body{
+        width:280px;
+        height:200px;
+    }
+    .flap{
+        border-left:140px solid transparent;
+        border-right:140px solid transparent;
+        border-top:110px solid #e8a9ff;
+    }
+    /* نامه متناسب */
+    #letter{
+        width:250px;
+        height:340px;
+        left:15px;
+        top:30px;
+        padding:14px;
+    }
+    .moon,
+    .moon-wrapper{
+        width:120px;
+        height:120px;
+    }
+    .message{
+        font-size:16px;
+    }
+    /* مهم: نامه از صفحه نزنه بیرون */
+    .open #letter{
+        transform: translateY(-200px);
+    }
+    /* حرکت پاکت کمتر و طبیعی‌تر */
+    .open #envelope{
+        transform: translateY(60px);
+    }
+}
+body{
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+}
